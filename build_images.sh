@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CUDA_VERSION=11.0.3
-CUDNN_VERSION=8
+CUDA_VERSION=${1:-11.0.3}
+CUDNN_VERSION=${2:-8}
 CUDA_BASE=nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_VERSION}-devel-ubuntu20.04
 docker build -t cuda-base-notebook --build-arg ROOT_CONTAINER=${CUDA_BASE} https://github.com/jupyter/docker-stacks.git#master:base-notebook/
 docker build -t cuda-minimal-notebook --build-arg BASE_CONTAINER=cuda-base-notebook https://github.com/jupyter/docker-stacks.git#master:minimal-notebook/
