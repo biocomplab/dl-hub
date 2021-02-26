@@ -15,9 +15,10 @@ RUN pip install --quiet \
     fix-permissions /home/$NB_USER
 
 #ARG TF_MODELS_VERSION=master
+ARG TF_MODELS_VERSION=v2.4.0
 # ARG TF_MODELS_VERSION=${TENSORFLOW_VERSION}
-#ENV TF_MODELS_VERSION=${TF_MODELS_VERSION}
-#RUN git clone -b ${TF_MODELS_VERSION} https://github.com/tensorflow/models.git /src/models
+ENV TF_MODELS_VERSION=${TF_MODELS_VERSION}
+RUN git clone -b ${TF_MODELS_VERSION} https://github.com/tensorflow/models.git $HOME/tf-models
 
 RUN pip install --quiet \
     'torch==1.7.1' \
@@ -33,8 +34,11 @@ RUN conda install --quiet --yes \
     papermill && \
     #jupyterlab-git && \
     conda clean --all -f -y && \
-    pip install --quiet \
+    # Use --pre flag to get beta
+    pip install --quiet --pre \
         jupyterlab-git && \
+    pip install \
+        jupyterlab-drawio && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
     jupyter lab build && \
     #npm cache clean --force && \
