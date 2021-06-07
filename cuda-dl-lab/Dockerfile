@@ -1,6 +1,17 @@
 ARG BASE_CONTAINER=cuda-scipy-notebook
 FROM ${BASE_CONTAINER}
 
+# Install extra packages
+USER root
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        texlive-latex-extra \
+        texlive-fonts-recommended \
+        dvipng \
+        cm-super && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+USER $NB_UID
+
 # Pass --build-arg values to set library versions
 ARG CUDA_VERSION
 ENV CUDA_VERSION=${CUDA_VERSION}
@@ -9,19 +20,19 @@ ENV CUDNN_VERSION=${CUDNN_VERSION}
 
 # Install Tensorflow
 RUN pip install --quiet \
-    'tensorflow-gpu==2.4.1' \
+    'tensorflow-gpu==2.5.0' \
     tf-explain && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
 #ARG TF_MODELS_VERSION=master
-ARG TF_MODELS_VERSION=v2.4.0
+ARG TF_MODELS_VERSION=v2.5.0
 # ARG TF_MODELS_VERSION=${TENSORFLOW_VERSION}
 ENV TF_MODELS_VERSION=${TF_MODELS_VERSION}
 RUN git clone -b ${TF_MODELS_VERSION} https://github.com/tensorflow/models.git $HOME/tf-models
 
 RUN pip install --quiet \
-    'torch==1.7.1' \
+    'torch==1.8.1' \
     torchvision \
     torchaudio \
     pytorch-ignite && \
@@ -30,6 +41,7 @@ RUN pip install --quiet \
 
 # Install extenstions
 RUN conda install --quiet --yes \
+    opencv \
     watermark \
     papermill && \
     #jupyterlab-git && \
