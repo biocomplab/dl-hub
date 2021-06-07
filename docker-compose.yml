@@ -9,7 +9,11 @@ services:
         - JUPYTERHUB_VERSION=1.3
     image: jupyterhub
     ports:
-      - "80:8000"
+      #- "80:8000"
+      - "8000:8000"
+      - "80:80"
+      # This may be unnecessary as the proxy may handle port mapping for SSL
+      - "443:443"
     container_name: jupyterhub-container
     deploy:
       resources:
@@ -27,9 +31,6 @@ services:
     environment:
       NVIDIA_VISIBLE_DEVICES: all
       NVIDIA_DRIVER_CAPABILITIES: all
-      #DOCKER_JUPYTER_CONTAINER: gpu-lab-container
-      #DOCKER_JUPYTER_IMAGE: mmrl/dl:PT1.6_TF2.2
-      #DOCKER_JUPYTER_IMAGE: base
       #DOCKER_JUPYTER_IMAGE: bdevans/cuda-notebook
       DOCKER_JUPYTER_IMAGE: cuda-dl-lab
       #DOCKER_JUPYTER_IMAGE: jupyterhub/singleuser
