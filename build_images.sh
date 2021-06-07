@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#CUDA_VERSION=${1:-11.0.3}
 CUDA_VERSION=${1:-11.2.2}
 CUDNN_VERSION=${2:-8}
 CUDA_BASE=nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_VERSION}-devel-ubuntu20.04
