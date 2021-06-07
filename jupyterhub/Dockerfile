@@ -1,18 +1,21 @@
-ARG JUPYTERHUB_VERSION=1.3
+ARG JUPYTERHUB_VERSION=1.4
 FROM jupyterhub/jupyterhub:${JUPYTERHUB_VERSION}
 RUN pip install --upgrade pip
 RUN pip install \
 	dockerspawner \
 	jupyterhub-dummyauthenticator \
 	#oauthenticator \
-	jupyterhub-ldapauthenticator
+	jupyterhub-ldapauthenticator \
+        https://github.com/andreas-h/sshauthenticator/archive/v0.1.zip
 	#jupyterhub-kerberosauthenticator
 #COPY jupyterhub_config.py .
 #RUN jupyterhub --generate-config
 #RUN cat jupyterhub_config.py
 
-# WORKDIR /srv/jupyterhub/
+WORKDIR /srv/jupyterhub/
 COPY jupyterhub_config.py .
+COPY chain.crt .
+COPY key/titan.key .
 #ENV DOCKER_JUPYTER_CONTAINER=gpu-lab-container \
     #DOCKER_JUPYTER_IMAGE=mmrl/dl:PT1.6_TF2.2 \
 #    DOCKER_JUPYTER_IMAGE='jupyterhub/singleuser:latest' \
