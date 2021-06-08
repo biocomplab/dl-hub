@@ -8,11 +8,9 @@ RUN pip install \
 	jupyterhub-ldapauthenticator \
         https://github.com/andreas-h/sshauthenticator/archive/v0.1.zip
 	#jupyterhub-kerberosauthenticator
-#COPY jupyterhub_config.py .
-#RUN jupyterhub --generate-config
-#RUN cat jupyterhub_config.py
 
 WORKDIR /srv/jupyterhub/
+#RUN jupyterhub --generate-config
 COPY jupyterhub_config.py .
 COPY cert/chain.crt .
 COPY cert/key/titan.key .
