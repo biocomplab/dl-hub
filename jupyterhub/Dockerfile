@@ -1,4 +1,4 @@
-ARG JUPYTERHUB_VERSION=1.4
+ARG JUPYTERHUB_VERSION=1.4.1
 FROM jupyterhub/jupyterhub:${JUPYTERHUB_VERSION}
 RUN pip install --upgrade pip
 RUN pip install \
