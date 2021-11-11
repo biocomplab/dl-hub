@@ -8,7 +8,8 @@ RUN apt-get update && \
         texlive-latex-extra \
         texlive-fonts-recommended \
         dvipng \
-        cm-super && \
+        cm-super \
+	rsync && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 USER $NB_UID
 
@@ -20,19 +21,19 @@ ENV CUDNN_VERSION=${CUDNN_VERSION}
 
 # Install Tensorflow
 RUN pip install --quiet \
-    'tensorflow-gpu==2.5.0' \
+    'tensorflow-gpu==2.6.2' \
     tf-explain && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
 #ARG TF_MODELS_VERSION=master
-ARG TF_MODELS_VERSION=v2.5.0
+ARG TF_MODELS_VERSION=v2.6.0
 # ARG TF_MODELS_VERSION=${TENSORFLOW_VERSION}
 ENV TF_MODELS_VERSION=${TF_MODELS_VERSION}
 RUN git clone -b ${TF_MODELS_VERSION} https://github.com/tensorflow/models.git $HOME/tf-models
 
 RUN pip install --quiet \
-    'torch==1.9.0' \
+    'torch==1.10.0' \
     torchvision \
     torchaudio \
     pytorch-ignite && \
