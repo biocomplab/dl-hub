@@ -1,6 +1,120 @@
 # dl-hub
 A Dockerised JupyterHub environment for Deep Learning with GPUs
 
+These instructions assume you are using the latest Ubuntu LTS on your server. To install and setup the required packages, execute these commands:
+
+```bash
+# Versions default to the last (tested working) versions
+# Search here: https://www.nvidia.com/Download/index.aspx?lang=en-uk
+NVIDIA_DRIVER_VERSION=470.82.00  # ${1:-460.39}
+# https://docs.docker.com/compose/install/
+DOCKER_COMPOSE_VERSION=1.29.2  # ${2:-1.28.2}
+
+# Update the installed packages
+sudo apt-get update && sudo apt-get upgrade
+
+# Blacklist noveau
+sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+# sudo reboot
+
+# Stop X-server
+sudo service lightdm stop  # Assuming a lightdm desktop. Alternative: gdm | kdm
+# sudo init 3  # This may also be necessary
+
+# Install nVidia drivers
+sudo apt-get install build-essential gcc-multilib dkms
+curl -o nvidia-drivers.run https://uk.download.nvidia.com/XFree86/Linux-x86_64/$NVIDIA_DRIVER_VERSION/NVIDIA-Linux-x86_64-$NVIDIA_DRIVER_VERSION.run
+chmod +x nvidia-drivers.run
+sudo ./nvidia-drivers.run --dkms --no-opengl-files
+# run nvidia-xconfig: Y
+# Verify installation
+nvidia-smi
+# read -p "Press any key to reboot..." -n1 -s
+sudo reboot  # Alternative: sudo service lightdm start
+
+# Install Docker
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# Verify key
+sudo apt-key fingerprint 0EBFCD88
+# sudo add-apt-repository \
+#    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+#    $(lsb_release -cs) \
+#    stable"
+# The standard command must be changed to avoid /etc/apt/sources.list being purged by Puppet
+sudo echo \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable" \
+   > /etc/apt/sources.list.d/docker.list
+sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io
+# Verify installation
+# sudo docker run hello-world
+
+# Create docker group to remove the need for sudo
+# sudo groupadd docker  # Already exists
+sudo nano /etc/adduser.conf
+EXTRA_GROUPS="docker users"
+ADD_EXTRA_GROUPS=1
+
+# Add user account to Docker group
+sudo usermod -aG docker `whoami`
+# Activate changes
+newgrp docker
+# Verify changes
+docker run --rm hello-world
+
+# Install nvidia-docker. NOTE: nvidia-docker2 is still required for Kubernetes but otherwise only nvidia-container-toolkit
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+# NOTE: I had to manually edit /etc/apt/sources.list.d/nvidia-docker.list to change 18.04 to 20.04
+# Install nvidia-docker2 to provide the legacy runtime=nvidia for use with docker-compose
+sudo apt-get update && sudo apt-get install -y nvidia-docker2
+# sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+# Verify installation
+docker run --rm --gpus all nvidia/cuda:11.4.2-cudnn8-devel-ubuntu20.04 nvidia-smi
+
+# Install Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# sudo chmod +x /usr/local/bin/docker-compose
+sudo chgrp docker /usr/local/bin/docker-compose
+sudo chmod 750 /usr/local/bin/docker-compose
+
+
+# Optional additional steps
+
+# Mount additional partitions
+
+# Move Docker disk to separate partition
+
+# Move Docker volume to /cache
+# sudo systemctl stop docker
+
+# Configure JupyterHub
+# Customise jupyterhub_config.py
+# Set up authentication
+# Enable https
+
+# docker-compose
+# Set up build target of jupyter/docker-stacks with --build-arg
+
+# Install extras
+# screen
+# tmux
+# htop
+
+# Set back up
+```
+
 In addition to these files, create an `.env` file with the necessary secrets set as variables e.g.:
 
 ```python
