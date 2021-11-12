@@ -41,6 +41,7 @@ c.JupyterHub.authenticator_class = 'sshauthenticator.SSHAuthenticator'
 c.SSHAuthenticator.server_address = os.environ["AUTH_SERVER_ADDRESS"]
 c.SSHAuthenticator.server_port = 22
 
+c.Authenticator.admin_users = set(os.environ.get("ADMIN_USERS").split(" "))
 #c.Authenticator.admin_users = {'<user>'}
 #c.JupyterHub.admin_access = True  # Admins can log in as other users
 

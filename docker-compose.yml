@@ -39,6 +39,7 @@ services:
       HUB_IP: jupyterhub
       #HUB_IP: "0.0.0.0"
       AUTH_SERVER_ADDRESS: ${AUTH_SERVER_ADDRESS}
+      ADMIN_USERS: ${ADMIN_USERS}
 #  cuda-base:
 #    build:
 #      #context: ./docker-stacks/base-notebook
