@@ -140,3 +140,5 @@ c.JupyterHub.port = 443
 # Configure configurable-http-proxy to redirect http to https
 c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
 ```
+
+The corresponding lines where the certificates are installed in `jupyterhub/Dockerfile` will also need to be edited. 
