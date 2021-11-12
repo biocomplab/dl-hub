@@ -123,3 +123,7 @@ AUTH_SERVER_ADDRESS=authenticator.uni.ac.uk
 ADMIN_USERS='user1 user2 user3'  # A string of user names seperated by spaces
 # DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
 ```
+
+Depending on your environment, you will probably want to configure a more sophisticated authenticator e.g. the `PAMAuthenticator`: https://github.com/jupyterhub/jupyterhub#configuration. You will need configuration details from the univerisity system adminstrators for this in order to use the existing user authentication systems. These details should be configured in `jupyterhub/jupyterhub_config.py` (with secrets in `.env` as necessary).
+
+Your organisation may also be able to issue and sign SSL certificates for the server. This repository currently assumes they are in `jupyterhub/cert/`. 
