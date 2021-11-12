@@ -1,2 +1,8 @@
+# Environment variables (configuration secrets)
+.env
+# Certificates
+jupyterhub/cert/
+# Firewall
 fw/
+# Drivers
 nvidia-drivers.run
