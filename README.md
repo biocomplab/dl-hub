@@ -104,9 +104,9 @@ ADMIN_USERS='user1 user2 user3'  # A string of user names seperated by spaces
 
 ### Authentication
 
-Depending on your environment, you will probably want to configure a more sophisticated authenticator e.g. the `PAMAuthenticator` or `ldapauthenticator`: https://github.com/jupyterhub/jupyterhub#configuration. You will need configuration details from the univerisity system adminstrators for this in order to use the existing user authentication systems. These details should be configured in `jupyterhub/jupyterhub_config.py` (with secrets in `.env` as necessary).
+Depending on your environment, you will probably want to configure a more sophisticated authenticator e.g. the `PAMAuthenticator` or `ldapauthenticator`: https://github.com/jupyterhub/jupyterhub#configuration. You will need configuration details from the univerisity system adminstrators for this in order to use the existing user authentication systems. These details should be configured in [`jupyterhub/jupyterhub_config.py`](https://github.com/bdevans/dl-hub/blob/main/jupyterhub/jupyterhub_config.py) (with secrets in `.env` as necessary).
 
-Your organisation may also be able to issue and sign SSL certificates for the server. This repository currently assumes they are in `jupyterhub/cert/`. Appropriate configuration settings then need to be set in `jupyterhub/jupyterhub_config.py` e.g.: 
+Your organisation may also be able to issue and sign SSL certificates for the server. This repository currently assumes they are in `jupyterhub/cert/`. Appropriate configuration settings then need to be set in [`jupyterhub/jupyterhub_config.py`](https://github.com/bdevans/dl-hub/blob/main/jupyterhub/jupyterhub_config.py) e.g.: 
 
 ```python
 # Configure SSL
@@ -118,7 +118,7 @@ c.JupyterHub.port = 443
 c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
 ```
 
-The corresponding lines where the certificates are installed in `jupyterhub/Dockerfile` will also need to be edited. 
+The corresponding lines where the certificates are installed in [`jupyterhub/Dockerfile`](https://github.com/bdevans/dl-hub/blob/main/jupyterhub/Dockerfile) will also need to be edited. 
 
 ### Optional additional steps
 
