@@ -1,7 +1,7 @@
 # dl-hub
 A Dockerised JupyterHub environment for Deep Learning with GPUs
 
-The hub spawns isolated, dockerised JupyterLab environments with mounted GPUs for deep learning accerlation. The containers and spawned from images based on the [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) but built using an [NVIDIA CUDA base image](https://hub.docker.com/r/nvidia/cuda). GPUs are currently shared between all spawned JupyterLab environments although it may be possible to allocate them in a round-robin system. 
+The hub spawns isolated, dockerised JupyterLab environments with mounted GPUs for deep learning accerlation. The containers are spawned from images based on the [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) but built using an [NVIDIA CUDA base image](https://hub.docker.com/r/nvidia/cuda). Note that GPUs are currently shared between all spawned JupyterLab environments although it may be possible to allocate them in a round-robin system. 
 
 ## Setup
 These instructions assume you are using the latest Ubuntu LTS on your server. To install and setup the required packages, execute these commands:
@@ -25,7 +25,7 @@ sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia
 sudo service lightdm stop  # Assuming a lightdm desktop. Alternative: gdm | kdm
 # sudo init 3  # This may also be necessary
 
-# Install nVidia drivers
+# Install NVIDIA drivers
 sudo apt-get install build-essential gcc-multilib dkms
 curl -o nvidia-drivers.run https://uk.download.nvidia.com/XFree86/Linux-x86_64/$NVIDIA_DRIVER_VERSION/NVIDIA-Linux-x86_64-$NVIDIA_DRIVER_VERSION.run
 chmod +x nvidia-drivers.run
@@ -91,31 +91,6 @@ sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOS
 # sudo chmod +x /usr/local/bin/docker-compose
 sudo chgrp docker /usr/local/bin/docker-compose
 sudo chmod 750 /usr/local/bin/docker-compose
-
-
-# Optional additional steps
-
-# Mount additional partitions
-
-# Move Docker disk to separate partition
-
-# Move Docker volume to /cache
-# sudo systemctl stop docker
-
-# Configure JupyterHub
-# Customise jupyterhub_config.py
-# Set up authentication
-# Enable https
-
-# docker-compose
-# Set up build target of jupyter/docker-stacks with --build-arg
-
-# Install extras
-# screen
-# tmux
-# htop
-
-# Set back up
 ```
 
 In addition to these files, create an `.env` file with the necessary secrets set as variables e.g.:
@@ -126,6 +101,8 @@ AUTH_SERVER_ADDRESS=authenticator.uni.ac.uk
 ADMIN_USERS='user1 user2 user3'  # A string of user names seperated by spaces
 # DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
 ```
+
+### Authentication
 
 Depending on your environment, you will probably want to configure a more sophisticated authenticator e.g. the `PAMAuthenticator` or `ldapauthenticator`: https://github.com/jupyterhub/jupyterhub#configuration. You will need configuration details from the univerisity system adminstrators for this in order to use the existing user authentication systems. These details should be configured in `jupyterhub/jupyterhub_config.py` (with secrets in `.env` as necessary).
 
@@ -142,3 +119,17 @@ c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port',
 ```
 
 The corresponding lines where the certificates are installed in `jupyterhub/Dockerfile` will also need to be edited. 
+
+### Optional additional steps
+
+* Mount additional partitions
+* Move Docker disk to separate partition
+    - `sudo systemctl stop docker`, move, `sudo systemctl start docker`
+* Customise JupyterHub
+    - Edit `jupyterhub_config.py`
+* Set up build target of `jupyter/docker-stacks with --build-arg`
+* Install extras, e.g.:
+    - screen
+    - tmux
+    - htop
+* Schedule a backup!
