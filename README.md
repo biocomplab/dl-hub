@@ -139,3 +139,54 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
     - c.DockerSpawner.allowed_images = {"Latest": "cuda-dl-lab:11.4.2-cudnn8", "Previous": "cuda-dl-lab:11.2.2-cudnn8"}
     - c.DockerSpawner.allowed_images = ["cuda-dl-lab:11.4.2-cudnn8", "cuda-dl-lab:11.2.2-cudnn8"]
 * Schedule a backup!
+
+## Updating
+
+### NVIDIA drivers
+* Find the latest drivers for your graphics cards: https://www.nvidia.co.uk/Download/index.aspx?lang=en-uk --> [Linux 64-bit, UK](https://www.nvidia.co.uk/Download/driverResults.aspx/175958/en-uk)
+```
+sudo service lightdm stop  # or gdm or kdm depending on your display manager
+curl -o nvidia-drivers.run https://uk.download.nvidia.com/XFree86/Linux-x86_64/$NVIDIA_DRIVER_VERSION/NVIDIA-Linux-x86_64-$NVIDIA_DRIVER_VERSION.run
+chmod +x nvidia-drivers.run
+sudo ./nvidia-drivers.run --dkms --no-opengl-files
+nvidia-smi
+sudo reboot
+```
+* Confirm the drivers work: `docker run --rm --gpus all nvidia/cuda:11.4.2-base nvidia-smi`
+
+### `docker` and `nvidia-docker`
+* `sudo apt update && sudo apt upgrade`
+
+### `docker-compose`
+```
+docker-compose -v
+sudo mv /usr/local/bin/docker-compose /usr/local/bin/docker-compose-1.29.2
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chown root:docker /usr/local/bin/docker-compose
+sudo chmod g+rx /usr/local/bin/docker-compose
+```
+
+### Docker CUDA images
+* Edit `build_images.sh` (or pass arguments) to update:
+  * CUDA_VERSION
+  * CUDNN_VERSION
+  * Eventually `ubuntu-20.04`
+
+* Edit `cuda-dl-lab/Dockerfile` to update with new versions:
+  * `'tensorflow-gpu==2.6.2'`: [Docs](https://www.tensorflow.org/install/gpu); [Code](https://github.com/tensorflow/tensorflow)
+  * `TF_MODELS_VERSION=v2.6.0`: [Code](https://github.com/tensorflow/models)
+  * `'torch==1.10.0'`: [Docs](https://pytorch.org/get-started/locally/); [Code](https://github.com/pytorch/pytorch)
+  * `magma-cuda112`: https://anaconda.org/search?q=magma
+
+* Edit `docker-compose.yml`:
+  * `JUPYTERHUB_VERSION=1.5.0`
+
+* Edit `jupyterhub/Dockerfile`:
+  * `JUPYTERHUB_VERSION=1.5.0`
+
+* Edit `jupyterhub/jupyterhub_config.py` for any additional volumes
+
+* `make build`
+
+### Restart `docker-compose`
+* `make clean`
