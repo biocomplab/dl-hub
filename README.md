@@ -124,7 +124,10 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
 
 * Mount additional partitions
 * Move Docker disk to separate partition
-    - `sudo systemctl stop docker`, move, `sudo systemctl start docker`
+    - `sudo systemctl stop docker`
+    - move the data
+    - add `"data-root": "/path/to/your/docker"` to `/etc/docker/daemon.json`
+    - `sudo systemctl start docker`
 * Customise JupyterHub
     - Edit `jupyterhub_config.py`
 * Set up build target of `jupyter/docker-stacks with --build-arg`
@@ -132,4 +135,7 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
     - screen
     - tmux
     - htop
+* Create a list or dictionary of allowed images which will be presented as a dropdown list of options for users at logon e.g.:
+    - c.DockerSpawner.allowed_images = {"Latest": "cuda-dl-lab:11.4.2-cudnn8", "Previous": "cuda-dl-lab:11.2.2-cudnn8"}
+    - c.DockerSpawner.allowed_images = ["cuda-dl-lab:11.4.2-cudnn8", "cuda-dl-lab:11.2.2-cudnn8"]
 * Schedule a backup!
