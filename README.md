@@ -68,7 +68,7 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
 
 # NOTE: I had to manually edit /etc/apt/sources.list.d/nvidia-docker.list to change 18.04 to 20.04
-# Install nvidia-docker2 to provide the legacy runtime=nvidia for use with docker-compose
+# Install nvidia-docker2 to provide the legacy runtime=nvidia for use with docker-compose (see: https://github.com/NVIDIA/nvidia-docker/issues/1268#issuecomment-632692949)
 sudo apt-get update && sudo apt-get install -y nvidia-docker2
 # sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 sudo systemctl restart docker
