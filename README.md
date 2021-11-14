@@ -119,7 +119,7 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
 ### Optional additional steps
 
 * Add users to the `docker` group to let them use docker on the server without `sudo`
-    - `sudo groupadd docker`  # It may already exists
+    - `sudo groupadd docker`  # It may already exist
     - `sudo nano /etc/adduser.conf` then add the following lines
         * `EXTRA_GROUPS="docker"`  # Separate groups with spaces e.g. `"docker users"`
         * `ADD_EXTRA_GROUPS=1`
@@ -129,19 +129,19 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
 * Mount additional partitions
 * Move Docker disk to separate partition
     - `sudo systemctl stop docker`
-    - move the data
-    - add `"data-root": "/path/to/your/docker"` to `/etc/docker/daemon.json`
+    - Copy or move the data e.g.: `sudo rsync -aP /var/lib/docker/ /path/to/your/docker_data`
+    - Edit `/etc/docker/daemon.json` to add `"data-root": "/path/to/your/docker_data"`
     - `sudo systemctl start docker`
 * Customise JupyterHub
     - Edit `jupyterhub_config.py`
 * Set up build target of `jupyter/docker-stacks with --build-arg`
 * Install extras, e.g.:
-    - screen
-    - tmux
-    - htop
+    - `screen`
+    - `tmux`
+    - `htop`
 * Create a list or dictionary of allowed images which will be presented as a dropdown list of options for users at logon e.g.:
-    - c.DockerSpawner.allowed_images = {"Latest": "cuda-dl-lab:11.4.2-cudnn8", "Previous": "cuda-dl-lab:11.2.2-cudnn8"}
-    - c.DockerSpawner.allowed_images = ["cuda-dl-lab:11.4.2-cudnn8", "cuda-dl-lab:11.2.2-cudnn8"]
+    - `c.DockerSpawner.allowed_images = {"Latest": "cuda-dl-lab:11.4.2-cudnn8", "Previous": "cuda-dl-lab:11.2.2-cudnn8"}`
+    - `c.DockerSpawner.allowed_images = ["cuda-dl-lab:11.4.2-cudnn8", "cuda-dl-lab:11.2.2-cudnn8"]`
 * Schedule a backup!
 
 ## Updating
@@ -173,8 +173,8 @@ sudo chmod g+rx /usr/local/bin/docker-compose
 
 ### Docker CUDA images
 * Edit `build_images.sh` (or pass arguments) to update:
-  * CUDA_VERSION
-  * CUDNN_VERSION
+  * `CUDA_VERSION`
+  * `CUDNN_VERSION`
   * Eventually `ubuntu-20.04`
 
 * Edit `cuda-dl-lab/Dockerfile` to update with new versions:
