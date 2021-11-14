@@ -3,6 +3,12 @@ A Dockerised JupyterHub environment for Deep Learning with GPUs
 
 The hub spawns isolated, dockerised JupyterLab environments with mounted GPUs for deep learning accerlation. The containers are spawned from images based on the [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) but built using an [NVIDIA CUDA base image](https://hub.docker.com/r/nvidia/cuda). Note that GPUs are currently shared between all spawned JupyterLab environments although it may be possible to allocate them in a round-robin system. 
 
+JupyterHub is a customisable, flexible, scalable, portable system for bringing Jupyter notebooks (labs) to groups of users. It gives users access to computing resources (including GPUs!) through a browser without them needing to install, configure or maintain the computing environment. 
+
+| [<img src="https://jupyterhub.readthedocs.io/en/stable/_images/jhub-fluxogram.jpeg" alt="JupyterHub Schematic" width="600">](https://jupyterhub.readthedocs.io/en/stable/) |
+| :--: |
+| *JupyterHub schematic from the [official documentation](https://jupyterhub.readthedocs.io/en/stable/).* |
+
 ## Setup
 These instructions assume you are using the latest Ubuntu LTS on your server. To install and setup the required packages, execute these commands:
 
