@@ -162,7 +162,7 @@ sudo reboot
 ### `docker` and `nvidia-docker`
 * `sudo apt update && sudo apt upgrade`
 
-### `docker-compose`
+### [`docker-compose`](https://github.com/docker/compose/releases)
 ```
 docker-compose -v  # Check if the installed version is up-to-date
 DOCKER_COMPOSE_VERSION=1.29.2
@@ -172,27 +172,26 @@ sudo chown root:docker /usr/local/bin/docker-compose
 sudo chmod g+rx /usr/local/bin/docker-compose
 ```
 
-### Docker CUDA images
+### [Docker CUDA images](https://hub.docker.com/r/nvidia/cuda/tags?page=1&name=devel-ubuntu)
 * Edit `build_images.sh` (or pass arguments) to update:
   * `CUDA_VERSION`
   * `CUDNN_VERSION`
   * Eventually `ubuntu-20.04`
 
 * Edit `cuda-dl-lab/Dockerfile` to update with new versions:
-  * `'tensorflow-gpu==2.6.2'`: [Docs](https://www.tensorflow.org/install/gpu); [Code](https://github.com/tensorflow/tensorflow)
-  * `TF_MODELS_VERSION=v2.6.0`: [Code](https://github.com/tensorflow/models)
-  * `'torch==1.10.0'`: [Docs](https://pytorch.org/get-started/locally/); [Code](https://github.com/pytorch/pytorch)
+  * [`'tensorflow-gpu==2.6.2'`](https://github.com/tensorflow/tensorflow/releases): [Docs](https://www.tensorflow.org/install/gpu); [Code](https://github.com/tensorflow/tensorflow)
+  * [`TF_MODELS_VERSION=v2.6.0`](https://github.com/tensorflow/models/releases): [Code](https://github.com/tensorflow/models)
+  * [`'torch==1.10.0'`](https://github.com/pytorch/pytorch/releases): [Docs](https://pytorch.org/get-started/locally/); [Code](https://github.com/pytorch/pytorch)
   * `magma-cuda112`: https://anaconda.org/search?q=magma
 
-* Edit `docker-compose.yml`:
-  * `JUPYTERHUB_VERSION=1.5.0`
+* `make build`
 
-* Edit `jupyterhub/Dockerfile`:
-  * `JUPYTERHUB_VERSION=1.5.0`
+### JupyterHub
+* Edit [`JUPYTERHUB_VERSION=1.5.0`](https://github.com/jupyterhub/jupyterhub/tags):
+  - `docker-compose.yml`:
+  - `jupyterhub/Dockerfile`:
 
 * Edit `jupyterhub/jupyterhub_config.py` for any additional volumes
-
-* `make build`
 
 ### Restart `docker-compose`
 * `make clean`
