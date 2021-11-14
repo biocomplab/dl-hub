@@ -187,9 +187,9 @@ sudo chmod g+rx /usr/local/bin/docker-compose
 * `make build`
 
 ### [JupyterHub](https://github.com/jupyterhub/jupyterhub/tags)
-* Edit `JUPYTERHUB_VERSION=1.5.0`:
-  - `docker-compose.yml`:
-  - `jupyterhub/Dockerfile`:
+* Update `JUPYTERHUB_VERSION=1.5.0` in:
+  - `docker-compose.yml`
+  - `jupyterhub/Dockerfile` (optional)
 
 * Edit `jupyterhub/jupyterhub_config.py` for any additional volumes
 
