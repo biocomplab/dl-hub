@@ -157,9 +157,10 @@ sudo reboot
 
 ### `docker-compose`
 ```
-docker-compose -v
-sudo mv /usr/local/bin/docker-compose /usr/local/bin/docker-compose-1.29.2
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+docker-compose -v  # Check if the installed version is up-to-date
+DOCKER_COMPOSE_VERSION=1.29.2
+sudo mv /usr/local/bin/docker-compose /usr/local/bin/docker-compose-previous
+sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chown root:docker /usr/local/bin/docker-compose
 sudo chmod g+rx /usr/local/bin/docker-compose
 ```
