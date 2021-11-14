@@ -6,12 +6,11 @@ The hub spawns isolated, dockerised JupyterLab environments with mounted GPUs fo
 ## Setup
 These instructions assume you are using the latest Ubuntu LTS on your server. To install and setup the required packages, execute these commands:
 
+### Install NVIDIA drivers
 ```bash
 # Versions default to the last (tested working) versions
 # Search here: https://www.nvidia.com/Download/index.aspx?lang=en-uk
 NVIDIA_DRIVER_VERSION=470.82.00  # ${1:-460.39}
-# https://docs.docker.com/compose/install/
-DOCKER_COMPOSE_VERSION=1.29.2  # ${2:-1.28.2}
 
 # Update the installed packages
 sudo apt-get update && sudo apt-get upgrade
@@ -35,6 +34,12 @@ sudo ./nvidia-drivers.run --dkms --no-opengl-files
 nvidia-smi
 # read -p "Press any key to reboot..." -n1 -s
 sudo reboot  # Alternative: sudo service lightdm start
+```
+
+### Install Docker and nvidia-docker
+```bash
+# https://docs.docker.com/compose/install/
+DOCKER_COMPOSE_VERSION=1.29.2  # ${1:-1.28.2}
 
 # Install Docker
 sudo apt-get install \
@@ -46,11 +51,8 @@ sudo apt-get install \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 # Verify key
 sudo apt-key fingerprint 0EBFCD88
-# sudo add-apt-repository \
-#    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-#    $(lsb_release -cs) \
-#    stable"
-# The standard command must be changed to avoid /etc/apt/sources.list being purged by Puppet
+
+# The standard command was changed to avoid /etc/apt/sources.list being purged by Puppet
 sudo echo \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
@@ -59,19 +61,6 @@ sudo echo \
 sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io
 # Verify installation
 # sudo docker run hello-world
-
-# Create docker group to remove the need for sudo
-# sudo groupadd docker  # Already exists
-sudo nano /etc/adduser.conf
-EXTRA_GROUPS="docker users"
-ADD_EXTRA_GROUPS=1
-
-# Add user account to Docker group
-sudo usermod -aG docker `whoami`
-# Activate changes
-newgrp docker
-# Verify changes
-docker run --rm hello-world
 
 # Install nvidia-docker. NOTE: nvidia-docker2 is still required for Kubernetes but otherwise only nvidia-container-toolkit
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
@@ -93,6 +82,7 @@ sudo chgrp docker /usr/local/bin/docker-compose
 sudo chmod 750 /usr/local/bin/docker-compose
 ```
 
+### Create `.env` file for sensitive configuration details
 In addition to these files, create an `.env` file with the necessary secrets set as variables e.g.:
 
 ```python
@@ -122,6 +112,14 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
 
 ### Optional additional steps
 
+* Add users to the `docker` group to let them use docker on the server without `sudo`
+    - `sudo groupadd docker`  # It may already exists
+    - `sudo nano /etc/adduser.conf` then add the following lines
+        * `EXTRA_GROUPS="docker"`
+        * `ADD_EXTRA_GROUPS=1`
+    - `sudo usermod -aG docker USERNAME`  # Add user account to the `docker` group
+    - `newgrp docker`  # Activate changes
+    - `docker run --rm hello-world`  # Verify changes
 * Mount additional partitions
 * Move Docker disk to separate partition
     - `sudo systemctl stop docker`
