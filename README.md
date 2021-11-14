@@ -89,7 +89,7 @@ sudo chmod 750 /usr/local/bin/docker-compose
 ```
 
 ### Create `.env` file for sensitive configuration details
-In addition to these files, create an `.env` file with the necessary secrets set as variables e.g.:
+In addition to these files, create a `.env` file with the necessary secrets set as variables e.g.:
 
 ```python
 COMPOSE_PROJECT_NAME=dl_hub
@@ -147,8 +147,8 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
 
 ## Updating
 
-### NVIDIA drivers
-* Find the latest drivers for your graphics cards: https://www.nvidia.co.uk/Download/index.aspx?lang=en-uk --> [Linux 64-bit, UK](https://www.nvidia.co.uk/Download/driverResults.aspx/175958/en-uk)
+### [NVIDIA drivers](https://www.nvidia.co.uk/Download/index.aspx?lang=en-uk)
+* Find the latest Linux 64-bit drivers for your graphics cards: https://www.nvidia.co.uk/Download/index.aspx?lang=en-uk
 ```
 sudo service lightdm stop  # or gdm or kdm depending on your display manager
 curl -o nvidia-drivers.run https://uk.download.nvidia.com/XFree86/Linux-x86_64/$NVIDIA_DRIVER_VERSION/NVIDIA-Linux-x86_64-$NVIDIA_DRIVER_VERSION.run
@@ -182,12 +182,12 @@ sudo chmod g+rx /usr/local/bin/docker-compose
   * [`'tensorflow-gpu==2.6.2'`](https://github.com/tensorflow/tensorflow/releases): [Docs](https://www.tensorflow.org/install/gpu); [Code](https://github.com/tensorflow/tensorflow)
   * [`TF_MODELS_VERSION=v2.6.0`](https://github.com/tensorflow/models/releases): [Code](https://github.com/tensorflow/models)
   * [`'torch==1.10.0'`](https://github.com/pytorch/pytorch/releases): [Docs](https://pytorch.org/get-started/locally/); [Code](https://github.com/pytorch/pytorch)
-  * `magma-cuda112`: https://anaconda.org/search?q=magma
+  * [`magma-cuda112`](https://anaconda.org/search?q=magma): https://anaconda.org/search?q=magma
 
 * `make build`
 
-### JupyterHub
-* Edit [`JUPYTERHUB_VERSION=1.5.0`](https://github.com/jupyterhub/jupyterhub/tags):
+### [JupyterHub](https://github.com/jupyterhub/jupyterhub/tags)
+* Edit `JUPYTERHUB_VERSION=1.5.0`:
   - `docker-compose.yml`:
   - `jupyterhub/Dockerfile`:
 
