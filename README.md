@@ -115,7 +115,7 @@ The corresponding lines where the certificates are installed in [`jupyterhub/Doc
 * Add users to the `docker` group to let them use docker on the server without `sudo`
     - `sudo groupadd docker`  # It may already exists
     - `sudo nano /etc/adduser.conf` then add the following lines
-        * `EXTRA_GROUPS="docker"`
+        * `EXTRA_GROUPS="docker"`  # Separate groups with spaces e.g. `"docker users"`
         * `ADD_EXTRA_GROUPS=1`
     - `sudo usermod -aG docker USERNAME`  # Add user account to the `docker` group
     - `newgrp docker`  # Activate changes
