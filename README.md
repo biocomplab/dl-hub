@@ -97,6 +97,7 @@ AUTH_SERVER_ADDRESS=authenticator.uni.ac.uk
 ADMIN_USERS='user1 user2 user3'  # A string of user names seperated by spaces
 # DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
 ```
+See [here](https://docs.docker.com/compose/environment-variables/) for documentation on setting and passing environment variables to `docker-compose`.
 
 ### Authentication
 
