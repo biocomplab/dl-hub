@@ -13,18 +13,20 @@ This repository builds a hub which spawns isolated, dockerised [JupyterLab](http
 These instructions assume you are using the latest Ubuntu LTS on your server. To install and setup the required packages, execute these commands:
 
 ### Install NVIDIA drivers
+First update the system and blacklist the `nouveau` drivers.
 ```bash
-# Versions default to the last (tested working) versions
-# Search here: https://www.nvidia.com/Download/index.aspx?lang=en-uk
-NVIDIA_DRIVER_VERSION=470.82.00  # ${1:-460.39}
-
 # Update the installed packages
 sudo apt-get update && sudo apt-get upgrade
 
 # Blacklist noveau
 sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
 sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
-# sudo reboot
+```
+It may be necessary to reboot at this stage: `sudo reboot`.
+```bash
+# Versions default to the last (tested working) versions
+# Search here: https://www.nvidia.com/Download/index.aspx?lang=en-uk
+NVIDIA_DRIVER_VERSION=470.82.00  # ${1:-460.39}
 
 # Stop X-server
 sudo service lightdm stop  # Assuming a lightdm desktop. Alternative: gdm | kdm
@@ -36,6 +38,7 @@ curl -o nvidia-drivers.run https://uk.download.nvidia.com/XFree86/Linux-x86_64/$
 chmod +x nvidia-drivers.run
 sudo ./nvidia-drivers.run --dkms --no-opengl-files
 # run nvidia-xconfig: Y
+
 # Verify installation
 nvidia-smi
 # read -p "Press any key to reboot..." -n1 -s
