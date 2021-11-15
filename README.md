@@ -7,7 +7,7 @@ JupyterHub is a customisable, flexible, scalable, portable system for bringing J
 | :--: |
 | *JupyterHub schematic from the [official documentation](https://jupyterhub.readthedocs.io/en/stable/).* |
 
-This repository builds a hub which spawns isolated, dockerised JupyterLab environments with mounted GPUs for deep learning accerlation. The containers are spawned from images based on the [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) but built using an [NVIDIA CUDA base image](https://hub.docker.com/r/nvidia/cuda). Note that GPUs are currently shared between all spawned JupyterLab environments although it may be possible to allocate them in a round-robin system. 
+This repository builds a hub which spawns isolated, dockerised [JupyterLab](https://jupyterlab.readthedocs.io/en/latest/) environments with mounted GPUs for deep learning accerlation. The containers are spawned from images based on the [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) but built using an [NVIDIA CUDA base image](https://hub.docker.com/r/nvidia/cuda). Note that GPUs are currently shared between all spawned JupyterLab environments although it may be possible to allocate them in a round-robin system. 
 
 ## Setup
 These instructions assume you are using the latest Ubuntu LTS on your server. To install and setup the required packages, execute these commands:
@@ -101,7 +101,7 @@ See [here](https://docs.docker.com/compose/environment-variables/) for documenta
 
 ### Authentication
 
-Depending on your environment, you will probably want to configure a more sophisticated authenticator e.g. the `PAMAuthenticator` or `ldapauthenticator`: https://github.com/jupyterhub/jupyterhub#configuration. You will need configuration details from the univerisity system adminstrators for this in order to use the existing user authentication systems. These details should be configured in [`jupyterhub/jupyterhub_config.py`](https://github.com/bdevans/dl-hub/blob/main/jupyterhub/jupyterhub_config.py) (with secrets in `.env` as necessary).
+Depending on your environment, you will probably want to configure a more sophisticated authenticator e.g. the [`PAMAuthenticator` or `ldapauthenticator`](https://github.com/jupyterhub/jupyterhub#configuration). You will need configuration details from the univerisity system adminstrators for this in order to use the existing user authentication systems. These details should be configured in [`jupyterhub/jupyterhub_config.py`](https://github.com/bdevans/dl-hub/blob/main/jupyterhub/jupyterhub_config.py) (with secrets in `.env` as necessary).
 
 Your organisation may also be able to issue and sign SSL certificates for the server. This repository currently assumes they are in `jupyterhub/cert/`. Appropriate configuration settings then need to be set in [`jupyterhub/jupyterhub_config.py`](https://github.com/bdevans/dl-hub/blob/main/jupyterhub/jupyterhub_config.py) e.g.: 
 
@@ -193,5 +193,5 @@ sudo chmod g+rx /usr/local/bin/docker-compose
 
 * Edit `jupyterhub/jupyterhub_config.py` for any additional volumes
 
-### Restart `docker-compose`
+### Restart the Hub
 * `make clean`
