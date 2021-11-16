@@ -7,7 +7,7 @@ JupyterHub is a customisable, flexible, scalable, portable system for bringing J
 | :--: |
 | *JupyterHub schematic from the [official documentation](https://jupyterhub.readthedocs.io/en/stable/).* |
 
-This repository builds a hub which spawns isolated, dockerised [JupyterLab](https://jupyterlab.readthedocs.io/en/latest/) environments with mounted GPUs for deep learning acceleration. The containers are spawned from images based on the [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) but built using an [NVIDIA CUDA base image](https://hub.docker.com/r/nvidia/cuda). Note that GPUs are currently shared between all spawned JupyterLab environments although it may be possible to allocate them in a round-robin system. 
+This repository builds a hub which spawns isolated, dockerised [JupyterLab](https://jupyterlab.readthedocs.io/en/latest/) environments with mounted GPUs for deep learning acceleration. The containers are spawned from images based on the [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks) but built using an [NVIDIA CUDA base image](https://hub.docker.com/r/nvidia/cuda). Note that GPUs are currently shared between all spawned JupyterLab environments although it may be possible to allocate them in a round-robin system (PRs accepted!). 
 
 ## Setup
 These instructions assume you are using the latest Ubuntu LTS on your server. To install and setup the required packages, execute these commands:
