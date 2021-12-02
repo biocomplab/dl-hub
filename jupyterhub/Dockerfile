@@ -3,9 +3,9 @@ FROM jupyterhub/jupyterhub:${JUPYTERHUB_VERSION}
 RUN pip install --upgrade pip
 RUN pip install \
 	dockerspawner \
-	jupyterhub-dummyauthenticator \
+	#jupyterhub-dummyauthenticator \
 	#oauthenticator \
-	jupyterhub-ldapauthenticator \
+	#jupyterhub-ldapauthenticator \
         https://github.com/andreas-h/sshauthenticator/archive/v0.1.zip
 	#jupyterhub-kerberosauthenticator
 
@@ -15,9 +15,7 @@ COPY jupyterhub_config.py .
 COPY cert/chain.crt .
 COPY cert/key/titan.key .
 #ENV DOCKER_JUPYTER_CONTAINER=gpu-lab-container \
-    #DOCKER_JUPYTER_IMAGE=mmrl/dl:PT1.6_TF2.2 \
 #    DOCKER_JUPYTER_IMAGE='jupyterhub/singleuser:latest' \
-    #DOCKER_NETWORK_NAME=bridge \
-#    DOCKER_NETWORK_NAME=hub_default
-    #HUB_IP=''
+#    DOCKER_NETWORK_NAME=hub_default \
+#    HUB_IP=''
 CMD ["jupyterhub", "-f", "jupyterhub_config.py"]
