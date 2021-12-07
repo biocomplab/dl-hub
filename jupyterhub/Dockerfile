@@ -1,12 +1,12 @@
-ARG JUPYTERHUB_VERSION=1.5.0
+ARG JUPYTERHUB_VERSION=2.0.0
 FROM jupyterhub/jupyterhub:${JUPYTERHUB_VERSION}
 RUN pip install --upgrade pip
 RUN pip install \
 	dockerspawner \
-	#jupyterhub-dummyauthenticator \
-	#oauthenticator \
-	#jupyterhub-ldapauthenticator \
         https://github.com/andreas-h/sshauthenticator/archive/v0.1.zip
+	#oauthenticator \
+	#jupyterhub-dummyauthenticator \
+	#jupyterhub-ldapauthenticator \
 	#jupyterhub-kerberosauthenticator
 
 WORKDIR /srv/jupyterhub/
