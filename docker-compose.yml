@@ -32,7 +32,6 @@ services:
     environment:
       NVIDIA_VISIBLE_DEVICES: all
       NVIDIA_DRIVER_CAPABILITIES: all
-      #DOCKER_JUPYTER_IMAGE: bdevans/cuda-notebook
       DOCKER_JUPYTER_IMAGE: cuda-dl-lab
       #DOCKER_JUPYTER_IMAGE: jupyterhub/singleuser
       DOCKER_NETWORK_NAME: ${COMPOSE_PROJECT_NAME}_default
@@ -42,7 +41,6 @@ services:
       ADMIN_USERS: ${ADMIN_USERS}
 #  cuda-base:
 #    build:
-#      #context: ./docker-stacks/base-notebook
 #      context: https://github.com/jupyter/docker-stacks.git
 #      dockerfile: base-notebook/Dockerfile
 #      args:
