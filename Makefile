@@ -9,7 +9,7 @@ clean:
 	docker-compose down
 	docker system prune -f
 	./build_images.sh -n
-	docker-compose build
+	docker-compose build --no-cache
 
 push:
 	docker tag cuda-dl-lab mmrl/cuda-dl-lab
