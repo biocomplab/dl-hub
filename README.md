@@ -48,7 +48,7 @@ sudo reboot  # Alternative: sudo service lightdm start
 ### Install Docker and nvidia-docker
 ```bash
 # https://docs.docker.com/compose/install/
-DOCKER_COMPOSE_VERSION=1.29.2  # ${1:-1.28.2}
+DOCKER_COMPOSE_VERSION=v2.2.2
 
 # Install Docker
 sudo apt-get install \
@@ -166,14 +166,8 @@ sudo reboot
 * `sudo apt update && sudo apt upgrade`
 
 ### [`docker-compose`](https://github.com/docker/compose/releases)
-```
-docker-compose -v  # Check if the installed version is up-to-date
-DOCKER_COMPOSE_VERSION=1.29.2
-sudo mv /usr/local/bin/docker-compose /usr/local/bin/docker-compose-previous
-sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chown root:docker /usr/local/bin/docker-compose
-sudo chmod g+rx /usr/local/bin/docker-compose
-```
+1. Check if the installed version is up-to-date: `docker-compose -v`
+2. Run the [script](https://raw.githubusercontent.com/bdevans/dl-hub/main/upgrade_docker_compose.sh) with the new version as the argument: `./upgrade_docker_compose.sh v2.2.2`
 
 ### [Docker CUDA images](https://hub.docker.com/r/nvidia/cuda/tags?page=1&name=devel-ubuntu)
 * Edit `build_images.sh` (or pass arguments) to update:
@@ -187,14 +181,14 @@ sudo chmod g+rx /usr/local/bin/docker-compose
   * [`'torch==1.10.0'`](https://github.com/pytorch/pytorch/releases): [Docs](https://pytorch.org/get-started/locally/); [Code](https://github.com/pytorch/pytorch)
   * [`magma-cuda112`](https://anaconda.org/search?q=magma): https://anaconda.org/search?q=magma
 
-* `make build`
+* `make build` or `make clean` to rebuild the `cuda-dl-lab` images from scratch
 
 ### [JupyterHub](https://github.com/jupyterhub/jupyterhub/tags)
-* Update `JUPYTERHUB_VERSION=1.5.0` in:
+* Update `JUPYTERHUB_VERSION=2.0.0` in:
   - `docker-compose.yml`
   - `jupyterhub/Dockerfile` (optional)
 
 * Edit `jupyterhub/jupyterhub_config.py` for any additional volumes
 
 ### Restart the Hub
-* `make clean`
+* `make hub`
