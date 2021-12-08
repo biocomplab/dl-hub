@@ -85,15 +85,17 @@ services:
     image: cuda-dl-lab
     command: echo
 
-#  cuda-test:
-#    image: nvidia/cuda:11.0.3-cudnn8-devel-ubuntu20.04
-#    command: nvidia-smi
-#    deploy:
-#      resources:
-#        reservations:
-#          devices:
-#            - capabilities:
-#              - gpu
+# This service exists to test that the containers can mount GPUs
+# Run with: `docker-compose up cuda-test`
+  cuda-test:
+    image: nvidia/cuda:${CUDA_VERSION:-11.2.2}-cudnn${CUDNN_VERSION:-8}-devel-ubuntu20.04
+    command: nvidia-smi
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities:
+              - gpu
     
 volumes:
   jupyterhub_data:
