@@ -170,10 +170,11 @@ sudo reboot
 2. Run the [script](https://raw.githubusercontent.com/bdevans/dl-hub/main/upgrade_docker_compose.sh) with the new version as the argument: `./upgrade_docker_compose.sh v2.2.2`
 
 ### [Docker CUDA images](https://hub.docker.com/r/nvidia/cuda/tags?page=1&name=devel-ubuntu)
-* Edit `build_images.sh` (or pass arguments) to update:
+* Edit `docker-compose.yml` (or `build_images.sh` if you prefer to use the script) to update:
   * `CUDA_VERSION`
   * `CUDNN_VERSION`
   * Eventually `ubuntu-20.04`
+* Alternatively, you can set the variables in `.env` or pass arguments e.g. `docker-compose build --build-arg CUDA_VERSION=x.y.z`
 
 * Edit `cuda-dl-lab/Dockerfile` to update with new versions:
   * [`'tensorflow-gpu==2.6.2'`](https://github.com/tensorflow/tensorflow/releases): [Docs](https://www.tensorflow.org/install/gpu); [Code](https://github.com/tensorflow/tensorflow)
@@ -191,4 +192,5 @@ sudo reboot
 * Edit `jupyterhub/jupyterhub_config.py` for any additional volumes
 
 ### Restart the Hub
+* `make stop` (in case the hub is running)
 * `make hub`
