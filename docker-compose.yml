@@ -1,5 +1,6 @@
 
-version: '2.3'
+version: '3.9'
+#'2.3'
 
 services:
   jupyterhub:
@@ -39,14 +40,52 @@ services:
       #HUB_IP: "0.0.0.0"
       AUTH_SERVER_ADDRESS: ${AUTH_SERVER_ADDRESS}
       ADMIN_USERS: ${ADMIN_USERS}
-#  cuda-base:
-#    build:
-#      context: https://github.com/jupyter/docker-stacks.git
+# WIP: These entries specify how to build each image with `docker-compose build` or
+# `docker-compose build --no-cache`. Variables can be set in the `.env` file or with `--build-arg`.
+# They also created containers which are made to exit with the `echo` command.
+# TODO: Prevent containers being spawned at all (except jupyterhub-container).
+# This can be achieved manually by specifying the service: `docker-compose up -d jupyterhub`
+  cuda-base-notebook:
+    build:
+      context: https://github.com/jupyter/docker-stacks.git#master:base-notebook
 #      dockerfile: base-notebook/Dockerfile
-#      args:
-#        - ROOT_CONTAINER=nvidia/cuda:11.0.3-cudnn8-devel-ubuntu20.04
-#    image: cuda-base-notebook
-#    command: echo
+      dockerfile: Dockerfile
+      args:
+        - ROOT_CONTAINER=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04
+    image: cuda-base-notebook
+    command: echo
+  cuda-minimal-notebook:
+    build:
+      context: https://github.com/jupyter/docker-stacks.git#master:minimal-notebook
+      dockerfile: Dockerfile
+      args:
+        - BASE_CONTAINER=cuda-base-notebook
+    depends_on:
+      - cuda-base-notebook
+    image: cuda-minimal-notebook
+    command: echo
+  cuda-scipy-notebook:
+    build:
+      context: https://github.com/jupyter/docker-stacks.git#master:scipy-notebook
+      dockerfile: Dockerfile
+      args:
+        - BASE_CONTAINER=cuda-minimal-notebook
+    depends_on:
+      - cuda-minimal-notebook
+    image: cuda-scipy-notebook
+    command: echo
+  cuda-dl-lab:
+    build:
+      context: ./cuda-dl-lab
+      args:
+        - BASE_CONTAINER=cuda-scipy-notebook
+        - CUDA_VERSION=${CUDA_VERSION:-11.2.2}
+        - CUDNN_VERSION=${CUDNN_VERSION:-8}
+    depends_on:
+      - cuda-scipy-notebook
+    image: cuda-dl-lab
+    command: echo
+
 #  cuda-test:
 #    image: nvidia/cuda:11.0.3-cudnn8-devel-ubuntu20.04
 #    command: nvidia-smi
