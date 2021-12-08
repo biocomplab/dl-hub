@@ -50,7 +50,7 @@ services:
 #      dockerfile: base-notebook/Dockerfile
       dockerfile: Dockerfile
       args:
-        - ROOT_CONTAINER=nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04
+        - ROOT_CONTAINER=nvidia/cuda:${CUDA_VERSION:-11.2.2}-cudnn${CUDNN_VERSION:-8}-devel-ubuntu20.04
     image: cuda-base-notebook
     command: echo
   cuda-minimal-notebook:
