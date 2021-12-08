@@ -1,6 +1,5 @@
 
-version: '3.9'
-#'2.3'
+version: "3.9"
 
 services:
   jupyterhub:
