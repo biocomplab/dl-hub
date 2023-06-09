@@ -22,7 +22,11 @@ sudo apt-get update && sudo apt-get upgrade
 sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
 sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
 ```
-It may be necessary to reboot at this stage: `sudo reboot`.
+If the `nouveau` driver was already in use, it is necessary to rebuild the kernel and reboot at this stage: 
+```bash
+sudo update-initramfs -u
+sudo reboot
+```
 ```bash
 # Versions default to the last (tested working) versions
 # Search here: https://www.nvidia.com/Download/index.aspx?lang=en-uk
