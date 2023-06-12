@@ -3,10 +3,10 @@ version: "3.9"
 
 services:
   jupyterhub:
-    build: 
+    build:
       context: ./jupyterhub
       args:
-        - JUPYTERHUB_VERSION=${JUPYTERHUB_VERSION:-2.0.0}
+        - JUPYTERHUB_VERSION=${JUPYTERHUB_VERSION:-4.0.1}
     image: jupyterhub
     ports:
       #- "80:8000"
@@ -37,25 +37,35 @@ services:
       DOCKER_NETWORK_NAME: ${COMPOSE_PROJECT_NAME}_default
       HUB_IP: jupyterhub
       #HUB_IP: "0.0.0.0"
-      AUTH_SERVER_ADDRESS: ${AUTH_SERVER_ADDRESS}
+      #AUTH_SERVER_ADDRESS: ${AUTH_SERVER_ADDRESS}
       ADMIN_USERS: ${ADMIN_USERS}
 # WIP: These entries specify how to build each image with `docker-compose build` or
 # `docker-compose build --no-cache`. Variables can be set in the `.env` file or with `--build-arg`.
 # They also created containers which are made to exit with the `echo` command.
 # TODO: Prevent containers being spawned at all (except jupyterhub-container).
 # This can be achieved manually by specifying the service: `docker-compose up -d jupyterhub`
-  cuda-base-notebook:
+# TODO: Add docker-stacks-foundation layer
+  cuda-stacks-foundation:
     build:
-      context: https://github.com/jupyter/docker-stacks.git#master:base-notebook
-#      dockerfile: base-notebook/Dockerfile
+      context: https://github.com/jupyter/docker-stacks.git#main:docker-stacks-foundation
       dockerfile: Dockerfile
       args:
-        - ROOT_CONTAINER=nvidia/cuda:${CUDA_VERSION:-11.2.2}-cudnn${CUDNN_VERSION:-8}-devel-ubuntu20.04
+        - ROOT_CONTAINER=nvidia/cuda:${CUDA_VERSION:-11.2.2}-cudnn${CUDNN_VERSION:-8}-devel-${OS_BASE:-ubuntu22.04}
+    image: cuda-stacks-foundation
+    command: echo
+  cuda-base-notebook:
+    build:
+      context: https://github.com/jupyter/docker-stacks.git#main:base-notebook
+      dockerfile: Dockerfile
+      args:
+        - BASE_CONTAINER=cuda-stacks-foundation
+    depends-on:
+      - cuda-stacks-foundation
     image: cuda-base-notebook
     command: echo
   cuda-minimal-notebook:
     build:
-      context: https://github.com/jupyter/docker-stacks.git#master:minimal-notebook
+      context: https://github.com/jupyter/docker-stacks.git#main:minimal-notebook
       dockerfile: Dockerfile
       args:
         - BASE_CONTAINER=cuda-base-notebook
@@ -65,7 +75,7 @@ services:
     command: echo
   cuda-scipy-notebook:
     build:
-      context: https://github.com/jupyter/docker-stacks.git#master:scipy-notebook
+      context: https://github.com/jupyter/docker-stacks.git#main:scipy-notebook
       dockerfile: Dockerfile
       args:
         - BASE_CONTAINER=cuda-minimal-notebook
@@ -78,8 +88,9 @@ services:
       context: ./cuda-dl-lab
       args:
         - BASE_CONTAINER=cuda-scipy-notebook
-        - CUDA_VERSION=${CUDA_VERSION:-11.2.2}
+        - CUDA_VERSION=${CUDA_VERSION:-11.8.0}
         - CUDNN_VERSION=${CUDNN_VERSION:-8}
+        - OS_BASE=${OS_BASE:-ubuntu22.04}
     depends_on:
       - cuda-scipy-notebook
     image: cuda-dl-lab
@@ -88,7 +99,7 @@ services:
 # This service exists to test that the containers can mount GPUs
 # Run with: `docker-compose up cuda-test`
   cuda-test:
-    image: nvidia/cuda:${CUDA_VERSION:-11.2.2}-cudnn${CUDNN_VERSION:-8}-devel-ubuntu20.04
+    image: nvidia/cuda:${CUDA_VERSION:-11.8.0}-cudnn${CUDNN_VERSION:-8}-devel-${OS_BASE:-ubuntu22.04}
     command: nvidia-smi
     deploy:
       resources:
@@ -96,6 +107,6 @@ services:
           devices:
             - capabilities:
               - gpu
-    
+
 volumes:
   jupyterhub_data:
