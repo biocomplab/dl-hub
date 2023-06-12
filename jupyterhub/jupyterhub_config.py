@@ -30,13 +30,13 @@ c.DockerSpawner.volumes = {
 }
 
 # This is the simplest authenticator for setup and testing
-# c.JupyterHub.authenticator_class = 'dummyauthenticator.DummyAuthenticator'
+c.JupyterHub.authenticator_class = 'dummyauthenticator.DummyAuthenticator'
 # c.DummyAuthenticator.password = "<password>"
 
 # SSH Authenticator
-c.JupyterHub.authenticator_class = 'sshauthenticator.SSHAuthenticator'
-c.SSHAuthenticator.server_address = os.environ["AUTH_SERVER_ADDRESS"]
-c.SSHAuthenticator.server_port = 22
+#c.JupyterHub.authenticator_class = 'sshauthenticator.SSHAuthenticator'
+#c.SSHAuthenticator.server_address = os.environ["AUTH_SERVER_ADDRESS"]
+#c.SSHAuthenticator.server_port = 22
 
 c.Authenticator.admin_users = set(os.environ.get("ADMIN_USERS").split(" "))
 # c.JupyterHub.admin_access = True  # Admins can log in as other users

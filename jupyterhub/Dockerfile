@@ -3,9 +3,9 @@ FROM jupyterhub/jupyterhub:${JUPYTERHUB_VERSION}
 RUN pip install --upgrade pip
 RUN pip install \
 	dockerspawner \
-        https://github.com/andreas-h/sshauthenticator/archive/v0.1.zip
+    #https://github.com/andreas-h/sshauthenticator/archive/v0.1.zip
 	#oauthenticator \
-	#jupyterhub-dummyauthenticator \
+	jupyterhub-dummyauthenticator \
 	#jupyterhub-ldapauthenticator \
 	#jupyterhub-kerberosauthenticator \
 	nbgrader
