@@ -13,8 +13,8 @@ RUN pip install \
 WORKDIR /srv/jupyterhub/
 #RUN jupyterhub --generate-config
 COPY jupyterhub_config.py .
-COPY cert/chain.crt .
-COPY cert/key/titan.key .
+#COPY cert/chain.crt .
+#COPY cert/key/titan.key .
 #ENV DOCKER_JUPYTER_CONTAINER=gpu-lab-container \
 #    DOCKER_JUPYTER_IMAGE='jupyterhub/singleuser:latest' \
 #    DOCKER_NETWORK_NAME=hub_default \

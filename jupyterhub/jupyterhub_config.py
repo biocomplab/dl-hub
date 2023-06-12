@@ -41,12 +41,13 @@ c.JupyterHub.authenticator_class = 'dummyauthenticator.DummyAuthenticator'
 c.Authenticator.admin_users = set(os.environ.get("ADMIN_USERS").split(" "))
 # c.JupyterHub.admin_access = True  # Admins can log in as other users
 
-# Configure SSL
-c.JupyterHub.ssl_key = '/srv/jupyterhub/titan.key'
-c.JupyterHub.ssl_cert = '/srv/jupyterhub/chain.crt'
-c.JupyterHub.port = 443
+# TODO: Configure SSL
+#c.JupyterHub.ssl_key = '/srv/jupyterhub/titan.key'
+#c.JupyterHub.ssl_cert = '/srv/jupyterhub/chain.crt'
+#c.JupyterHub.port = 443
+c.JupyterHub.port = 80
 # Configure configurable-http-proxy to redirect http to https
-c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
+#c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
 
 c.Spawner.environment = {'GRANT_SUDO': 'yes'}
 # c.Spawner.default_url = '/lab'
