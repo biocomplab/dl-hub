@@ -7,7 +7,8 @@ RUN pip install \
 	#oauthenticator \
 	#jupyterhub-dummyauthenticator \
 	#jupyterhub-ldapauthenticator \
-	#jupyterhub-kerberosauthenticator
+	#jupyterhub-kerberosauthenticator \
+	nbgrader
 
 WORKDIR /srv/jupyterhub/
 #RUN jupyterhub --generate-config
