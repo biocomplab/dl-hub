@@ -59,7 +59,7 @@ services:
       dockerfile: Dockerfile
       args:
         - BASE_CONTAINER=cuda-stacks-foundation
-    depends-on:
+    depends_on:
       - cuda-stacks-foundation
     image: cuda-base-notebook
     command: echo
