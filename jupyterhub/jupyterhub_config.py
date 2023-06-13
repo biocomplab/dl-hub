@@ -31,7 +31,8 @@ c.DockerSpawner.volumes = {
 
 # This is the simplest authenticator for setup and testing
 c.JupyterHub.authenticator_class = 'dummyauthenticator.DummyAuthenticator'
-# c.DummyAuthenticator.password = "<password>"
+# Set the password by adding PASSWORD="<password>" in the .env file
+c.DummyAuthenticator.password = os.environ.get("PASSWORD")
 
 # SSH Authenticator
 #c.JupyterHub.authenticator_class = 'sshauthenticator.SSHAuthenticator'
