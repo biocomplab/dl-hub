@@ -50,7 +50,7 @@ services:
       context: https://github.com/jupyter/docker-stacks.git#main:docker-stacks-foundation
       dockerfile: Dockerfile
       args:
-        - ROOT_CONTAINER=nvidia/cuda:${CUDA_VERSION:-11.2.2}-cudnn${CUDNN_VERSION:-8}-devel-${OS_BASE:-ubuntu22.04}
+        - ROOT_CONTAINER=nvidia/cuda:${CUDA_VERSION:-11.8.0}-cudnn${CUDNN_VERSION:-8}-devel-${OS_BASE:-ubuntu22.04}
     image: cuda-stacks-foundation
     command: echo
   cuda-base-notebook:
