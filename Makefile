@@ -1,4 +1,5 @@
-
+help:
+	@cat Makefile
 
 build:
 	docker compose down
