@@ -22,8 +22,9 @@ ENV CUDNN_VERSION=${CUDNN_VERSION}
 
 # Install Tensorflow
 RUN pip install --quiet \
-    'tensorflow==2.12.*' \
-    'tf-models-official==2.12.0' \
+    'pyyaml==6.0.1' \
+    'tensorflow' \
+    'tf-models-official' \
     tf-explain && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "${HOME}"
@@ -35,7 +36,7 @@ RUN pip install --quiet \
 #RUN git clone -b ${TF_MODELS_VERSION} https://github.com/tensorflow/models.git $HOME/tf-models
 
 RUN pip install --quiet \
-    'torch==2.0.*' \
+    'torch' \
     torchvision \
     torchaudio \
     pytorch-ignite && \
