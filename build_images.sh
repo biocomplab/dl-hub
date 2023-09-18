@@ -21,9 +21,9 @@ while getopts ":c:d:b:n" opt; do
 		b)
 			OS_BASE="${OPTARG}"
 			;;
-        n)
-            NO_CACHE=--no-cache
-            ;;
+		n)
+			NO_CACHE=--no-cache
+			;;
 		*)
 			echo "Unknown option"
 			usage
