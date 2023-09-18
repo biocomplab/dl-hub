@@ -12,6 +12,7 @@ build: builder
 clean: builder
 	docker compose down
 	docker system prune -f
+	docker buildx prune
 	#./build_images.sh -n
 	docker compose build --no-cache
 
