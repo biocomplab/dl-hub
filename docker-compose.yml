@@ -6,7 +6,7 @@ services:
     build:
       context: ./jupyterhub
       args:
-        - JUPYTERHUB_VERSION=${JUPYTERHUB_VERSION:-4.0.1}
+        - JUPYTERHUB_VERSION=${JUPYTERHUB_VERSION:-4.0.2}
     image: jupyterhub
     ports:
       #- "80:8000"
