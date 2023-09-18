@@ -29,12 +29,6 @@ RUN pip install --quiet \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "${HOME}"
 
-#ARG TF_MODELS_VERSION=master
-#ARG TF_MODELS_VERSION=v2.12.0
-# ARG TF_MODELS_VERSION=${TENSORFLOW_VERSION}
-#ENV TF_MODELS_VERSION=${TF_MODELS_VERSION}
-#RUN git clone -b ${TF_MODELS_VERSION} https://github.com/tensorflow/models.git $HOME/tf-models
-
 RUN pip install --quiet \
     'torch==2.0.*' \
     torchvision \
