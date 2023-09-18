@@ -1,12 +1,15 @@
 help:
 	@cat Makefile
 
-build:
+builder:
+	docker buildx use default
+
+build: builder
 	docker compose down
 	#./build_images.sh
 	docker compose build
 
-clean:
+clean: builder
 	docker compose down
 	docker system prune -f
 	#./build_images.sh -n
@@ -25,4 +28,4 @@ hub:
 test:
 	docker compose up cuda-test
 
-.PHONY: build clean push stop hub test
+.PHONY: build builder clean push stop hub test
