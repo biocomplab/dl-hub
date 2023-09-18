@@ -44,7 +44,6 @@ services:
 # They also created containers which are made to exit with the `echo` command.
 # TODO: Prevent containers being spawned at all (except jupyterhub-container).
 # This can be achieved manually by specifying the service: `docker-compose up -d jupyterhub`
-# TODO: Add docker-stacks-foundation layer
   cuda-stacks-foundation:
     build:
       context: https://github.com/jupyter/docker-stacks.git#main:images/docker-stacks-foundation
