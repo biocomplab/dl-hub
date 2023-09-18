@@ -17,8 +17,8 @@ clean: builder
 	docker compose build --no-cache
 
 push:
-	docker tag cuda-dl-lab mmrl/cuda-dl-lab
-	docker image push mmrl/cuda-dl-lab
+	docker tag cuda-dl-lab biocomplab/cuda-dl-lab
+	docker image push biocomplab/cuda-dl-lab
 
 stop:
 	docker compose down
