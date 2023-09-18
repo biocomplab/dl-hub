@@ -81,4 +81,4 @@ LABEL maintainer="ben.d.evans@gmail.com" \
     name="Deep learning image" \
     description="A Python based GPU-accelerated Jupyter image for deep learning." \
     org.opencontainers.image.authors="Ben Evans" \
-    org.opencontainers.image.url="https://github.com/bdevans/dl-hub"
+    org.opencontainers.image.url="https://github.com/biocomplab/dl-hub"
