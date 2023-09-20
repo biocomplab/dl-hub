@@ -2,10 +2,8 @@
 
 usage() { echo "Usage: $0 [-c <x.y.z>] [-d <x>] [-n]" 1>&2; exit 1; }
 
-#CUDA_VERSION=${1:-11.2.2}
 #CUDA_VERSION=12.1.1
 CUDA_VERSION=11.8.0
-#CUDNN_VERSION=${2:-8}
 CUDNN_VERSION=8
 OS_BASE=ubuntu22.04
 NO_CACHE=""
