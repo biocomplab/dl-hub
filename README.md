@@ -223,7 +223,7 @@ sudo reboot
 * `make build` or `make clean` to rebuild the `cuda-dl-lab` images from scratch
 
 ### [JupyterHub](https://github.com/jupyterhub/jupyterhub/tags)
-* Update `JUPYTERHUB_VERSION=4.0.1` in:
+* Update `JUPYTERHUB_VERSION=4.0.2` in:
   - `docker-compose.yml`
   - `jupyterhub/Dockerfile` (optional)
 
