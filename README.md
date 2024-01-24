@@ -35,7 +35,7 @@ Check the installed Graphics card with: `sudo lshw -C display`.
 ```bash
 # Versions default to the last (tested working) versions
 # Search here: https://www.nvidia.com/Download/index.aspx?lang=en-uk
-export NVIDIA_DRIVER_VERSION=525.116.04  # ${1:-460.39}
+export NVIDIA_DRIVER_VERSION=545.29.06  # ${1:-460.39}
 
 # [Optional] Stop X-server if a GUI is installed
 # sudo service lightdm stop  # Assuming a lightdm desktop. Alternative: gdm | kdm
@@ -43,7 +43,7 @@ export NVIDIA_DRIVER_VERSION=525.116.04  # ${1:-460.39}
 
 # Install NVIDIA drivers
 sudo apt-get install build-essential gcc-multilib dkms
-curl -o nvidia-drivers.run https://uk.download.nvidia.com/XFree86/Linux-x86_64/$NVIDIA_DRIVER_VERSION/NVIDIA-Linux-x86_64-$NVIDIA_DRIVER_VERSION.run
+curl -o nvidia-drivers-$NVIDIA_DRIVER_VERSION.run https://uk.download.nvidia.com/XFree86/Linux-x86_64/$NVIDIA_DRIVER_VERSION/NVIDIA-Linux-x86_64-$NVIDIA_DRIVER_VERSION.run
 chmod +x nvidia-drivers-$NVIDIA_DRIVER_VERSION.run
 sudo ./nvidia-drivers-$NVIDIA_DRIVER_VERSION.run --dkms --no-opengl-files
 # run nvidia-xconfig: Y
