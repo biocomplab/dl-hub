@@ -16,7 +16,10 @@ clean: builder
 	#./build_images.sh -n
 	docker compose build --no-cache
 
-push:
+login:
+	docker login
+
+push: login
 	docker tag cuda-dl-lab biocomplab/cuda-dl-lab
 	docker image push biocomplab/cuda-dl-lab
 
@@ -29,4 +32,4 @@ hub:
 test:
 	docker compose up cuda-test
 
-.PHONY: build builder clean push stop hub test
+.PHONY: build builder clean login push stop hub test
