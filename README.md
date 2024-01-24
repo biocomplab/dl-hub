@@ -92,6 +92,7 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 
 sudo nvidia-ctk runtime configure --runtime=docker
+# Alternatively use containerd or crio as the runtime
 
 sudo systemctl restart docker
 ```
