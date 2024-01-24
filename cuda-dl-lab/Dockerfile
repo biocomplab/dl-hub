@@ -23,19 +23,20 @@ ENV CUDNN_VERSION=${CUDNN_VERSION}
 # Install Tensorflow
 RUN pip install --quiet \
     'pyyaml>=6.0.1' \
-    'tensorflow==2.13.*' \
+    'tensorflow==2.15.*' \
     'tf-models-official' \
     tf-explain && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "${HOME}"
 
 RUN pip install --quiet \
-    'torch==2.0.*' \
+    'torch==2.1.*' \
     torchvision \
     torchaudio \
     pytorch-ignite && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+# --index-url https://download.pytorch.org/whl/cu118
 
 # Install extenstions
 RUN conda install --quiet --yes \

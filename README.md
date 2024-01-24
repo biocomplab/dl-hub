@@ -115,7 +115,7 @@ sudo systemctl restart docker
 
 ```bash
 # Verify installation
-docker run --rm --gpus all nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 nvidia-smi
+docker run --rm --gpus all nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04 nvidia-smi
 ```
 
 ### Post Installation Steps
@@ -203,7 +203,7 @@ sudo ./nvidia-drivers-$NVIDIA_DRIVER_VERSION.run --dkms --no-opengl-files
 nvidia-smi
 sudo reboot
 ```
-* Confirm the drivers work: `docker run --rm --gpus all nvidia/cuda:12.1.1-base-ubuntu22.04 nvidia-smi`
+* Confirm the drivers work: `docker run --rm --gpus all nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04 nvidia-smi`
 
 ### Docker, Docker Compose and `nvidia-container-toolkit`
 * `sudo apt update && sudo apt upgrade`
